@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Zap, Globe, Music2, MessageCircle, PlayCircle } from "lucide-react";
+import { Globe, Music2, MessageCircle, PlayCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Suspense } from "react";
-import { SITE_NAME } from "@/lib/constants";
 import { CopyrightYear } from "@/components/shared/CopyrightYear";
+import { Logo } from "@/components/shared/Logo";
 
 const footerLinks = {
   Shop: [
@@ -14,7 +14,7 @@ const footerLinks = {
     { label: "All Products", href: "/products" },
   ],
   Support: [
-    { label: "Contact Us", href: "/about#contact" },
+    { label: "Contact Us", href: "/help" },
     { label: "FAQ", href: "/faq" },
     { label: "Returns & Refunds", href: "/returns" },
     { label: "Track Order", href: "/account/orders" },
@@ -41,11 +41,8 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-2 lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                <Zap className="h-4 w-4" />
-              </span>
-              {SITE_NAME}
+            <Link href="/" className="flex items-center">
+              <Logo className="h-8 w-auto" />
             </Link>
             <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xs">
               Your one-stop shop for the latest mobile phones and accessories. Quality products, fast delivery.
@@ -95,7 +92,7 @@ export function Footer() {
             <Suspense fallback="2025">
               <CopyrightYear />
             </Suspense>{" "}
-            {SITE_NAME}. All rights reserved.
+            {/* {SITE_NAME}. All rights reserved. */}
           </p>
           <div className="flex items-center gap-4">
             {/* Payment logos (text placeholders — swap with SVGs in polish phase) */}

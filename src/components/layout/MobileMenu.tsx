@@ -3,8 +3,8 @@
 import { useState, useEffect, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { Menu, X, Zap, Smartphone, Shield, Zap as ZapIcon, Headphones, Tablet, Cable, User, LogIn } from "lucide-react";
-import { SITE_NAME } from "@/lib/constants";
+import { Menu, X, Smartphone, Shield, Zap as ZapIcon, Headphones, Tablet, Cable, User, LogIn } from "lucide-react";
+import { Logo } from "@/components/shared/Logo";
 
 const navLinks = [
   { label: "Smartphones", href: "/categories/smartphones", icon: Smartphone },
@@ -56,13 +56,10 @@ function DrawerPortal({ open, onClose }: { open: boolean; onClose: () => void })
         <div className="flex h-16 shrink-0 items-center justify-between border-b px-4">
           <Link
             href="/"
-            className="flex items-center gap-2 font-bold text-lg"
+            className="flex items-center"
             onClick={onClose}
           >
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Zap className="h-4 w-4" />
-            </span>
-            {SITE_NAME}
+            <Logo className="h-8 w-auto" />
           </Link>
           <button
             onClick={onClose}

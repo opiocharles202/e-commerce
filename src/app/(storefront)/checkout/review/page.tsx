@@ -16,17 +16,17 @@ const dummyOrder = {
   items: [
     {
       id: "ci-1", name: "iPhone 16 Pro Max", brand: "Apple",
-      image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=200&q=80",
+      image: "/iphone-16.png",
       price: 1199.00, quantity: 1,
     },
     {
       id: "ci-2", name: "AirPods Pro 2nd Gen", brand: "Apple",
-      image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=200&q=80",
+      image: "/airpods-pro.png",
       price: 249.00, quantity: 2,
     },
     {
       id: "ci-3", name: "Anker 65W GaN Charger", brand: "Anker",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=80",
+      image: "/anker-charger.png",
       price: 45.99, quantity: 1,
     },
   ],

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { ShoppingCart } from "lucide-react";
 import type { Product } from "@/types/domain";
@@ -13,10 +14,12 @@ interface StickyBuyBarProps {
 
 export function StickyBuyBar({ product, onAddToCart, disabled }: StickyBuyBarProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
-      // Show the sticky bar when the user scrolls past 500px
+      // Show the sticky bar when the user scrolls past 600px
       if (window.scrollY > 600) {
         setIsVisible(true);
       } else {
@@ -28,7 +31,9 @@ export function StickyBuyBar({ product, onAddToCart, disabled }: StickyBuyBarPro
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
       className={`fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-950/95 backdrop-blur-md py-3 px-4 shadow-xl transition-all duration-300 transform ${
         isVisible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0 pointer-events-none"
@@ -79,6 +84,7 @@ export function StickyBuyBar({ product, onAddToCart, disabled }: StickyBuyBarPro
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

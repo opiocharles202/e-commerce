@@ -46,62 +46,106 @@ export function HeroBanner({ banners }: HeroBannerProps) {
   }, [current]);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-gray-900 shadow-2xl shadow-gray-900/10 aspect-[3/4] sm:aspect-[16/9] lg:aspect-[21/9]">
+    <div className="relative w-full overflow-hidden rounded-2xl bg-gray-950 shadow-2xl shadow-gray-950/10 aspect-[3/4] sm:aspect-[16/9] lg:aspect-[21/9]">
       {/* Slides */}
-      {banners.map((b, i) => (
-        <div
-          key={b.id}
-          className={`absolute inset-0 transition-all duration-700 ease-out ${
-            i === current 
-              ? "opacity-100 scale-100" 
-              : "opacity-0 scale-105 pointer-events-none"
-          }`}
-          aria-hidden={i !== current}
-        >
-          <Image
-            src={b.image}
-            alt={b.title}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
-            className="object-cover"
-            priority={i === 0}
-            loading={i === 0 ? "eager" : "lazy"}
-          />
-          {/* Multi-layered gradient overlay for depth */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20 sm:from-black/80 sm:via-black/40 sm:to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent sm:from-black/40" />
-        </div>
-      ))}
+      {banners.map((b, i) => {
+        const isIphone = b.id === "banner-1" || b.title.toLowerCase().includes("iphone");
+        const isGalaxy = b.id === "banner-2" || b.title.toLowerCase().includes("galaxy");
+        
+        let bgGradient = "from-gray-950 via-gray-900 to-black";
+        let glowColor = "bg-amber-500/10";
+        if (isIphone) {
+          bgGradient = "from-[#110f0e] via-[#1a1715] to-[#080707]";
+          glowColor = "bg-amber-500/10";
+        } else if (isGalaxy) {
+          bgGradient = "from-[#07080b] via-[#0f111c] to-[#040507]";
+          glowColor = "bg-indigo-500/15";
+        }
 
-      {/* Content */}
-      <div className="relative z-10 flex h-full flex-col justify-end pb-12 sm:justify-center px-6 py-8 sm:px-14 sm:py-14">
-        {banner.badge && (
-          <span className="mb-3 sm:mb-4 inline-flex items-center gap-1.5 w-fit px-2.5 py-0.5 sm:px-3 sm:py-1 bg-amber-500/90 backdrop-blur-sm text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-lg shadow-amber-500/20 animate-in fade-in-0 slide-in-from-left-4 duration-500">
-            <Zap className="h-3 w-3 fill-current" />
-            {banner.badge}
-          </span>
-        )}
-        <h1 className="text-xl font-black leading-[1.15] text-white sm:text-3xl md:text-4xl lg:text-5xl max-w-xl tracking-tight drop-shadow-lg animate-in fade-in-0 slide-in-from-left-6 duration-700">
-          {banner.title}
-        </h1>
-        <p className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base text-white/75 max-w-xs sm:max-w-md lg:max-w-lg leading-relaxed animate-in fade-in-0 slide-in-from-left-8 duration-1000">
-          {banner.subtitle}
-        </p>
-        <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-2.5 sm:gap-3 animate-in fade-in-0 slide-in-from-bottom-4 duration-1000">
-          <Link
-            href={banner.ctaHref}
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3 bg-amber-500 hover:bg-amber-400 text-gray-950 font-bold text-xs sm:text-sm rounded-xl shadow-xl shadow-amber-500/20 transition-all duration-200 hover:shadow-2xl hover:shadow-amber-500/30 hover:-translate-y-0.5"
+        const isActive = i === current;
+
+        return (
+          <div
+            key={b.id}
+            className={`absolute inset-0 bg-gradient-to-br ${bgGradient} transition-all duration-700 ease-out ${
+              isActive 
+                ? "opacity-100 scale-100 pointer-events-auto" 
+                : "opacity-0 scale-105 pointer-events-none"
+            }`}
+            aria-hidden={!isActive}
           >
-            {banner.ctaText}
-          </Link>
-          <Link
-            href="/products"
-            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3 border border-white/30 text-white bg-white/10 hover:bg-white/20 font-bold text-xs sm:text-sm rounded-xl backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5"
-          >
-            Browse All
-          </Link>
-        </div>
-      </div>
+            {/* Ambient Background Glow */}
+            <div className={`absolute top-1/2 right-0 -translate-y-1/2 h-[90%] w-[60%] rounded-full ${glowColor} blur-[120px] pointer-events-none`} />
+
+            {/* Content Column (Responsive Flex) */}
+            <div className="relative z-10 flex h-full flex-col justify-end pb-14 sm:justify-center px-6 py-8 sm:px-14 sm:py-14 sm:max-w-[55%] select-none">
+              {b.badge && isActive && (
+                <span className="mb-3 sm:mb-4 inline-flex items-center gap-1.5 w-fit px-2.5 py-0.5 sm:px-3 sm:py-1 bg-amber-500 text-gray-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-full shadow-lg shadow-amber-500/20 animate-in fade-in-0 slide-in-from-left-4 duration-500">
+                  <Zap className="h-3 w-3 fill-current" />
+                  {b.badge}
+                </span>
+              )}
+              
+              {isActive && (
+                <>
+                  <h1 className="text-2xl font-black leading-[1.1] text-white sm:text-4xl md:text-5xl lg:text-6xl tracking-tight drop-shadow-lg animate-in fade-in-0 slide-in-from-left-6 duration-700">
+                    {b.title}
+                  </h1>
+                  
+                  <p className="mt-2 sm:mt-3 text-xs sm:text-sm md:text-base text-gray-400 max-w-xs sm:max-w-md leading-relaxed animate-in fade-in-0 slide-in-from-left-8 duration-1000">
+                    {b.subtitle}
+                  </p>
+                  
+                  <div className="mt-5 sm:mt-8 flex flex-row gap-3 animate-in fade-in-0 slide-in-from-bottom-4 duration-1000">
+                    <Link
+                      href={b.ctaHref}
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3 bg-amber-500 hover:bg-amber-400 text-gray-950 font-bold text-xs sm:text-sm rounded-xl shadow-xl shadow-amber-500/20 transition-all duration-200 hover:shadow-2xl hover:shadow-amber-500/30 hover:-translate-y-0.5"
+                    >
+                      {b.ctaText}
+                    </Link>
+                    <Link
+                      href="/products"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-7 sm:py-3 border border-white/20 text-white bg-white/5 hover:bg-white/10 font-bold text-xs sm:text-sm rounded-xl backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5"
+                    >
+                      Browse All
+                    </Link>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Product Image Placement */}
+            {/* Mobile View: Full-bleed cover background to hide borders and maximize phone size */}
+            <div className="absolute inset-0 z-0 sm:hidden block pointer-events-none">
+              <Image
+                src={b.image}
+                alt={b.title}
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-[0.7] transition-opacity duration-700"
+                priority={i === 0}
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent" />
+            </div>
+
+            {/* Desktop View: Clean object-contain product placement on the right side */}
+            <div className="hidden sm:flex absolute inset-0 left-1/2 items-center justify-end p-12 md:p-16 pointer-events-none z-0">
+              <div className="relative w-full h-full max-h-full max-w-full">
+                <Image
+                  src={b.image}
+                  alt={b.title}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 600px"
+                  className="object-contain object-right transition-transform duration-1000 ease-out hover:scale-105 pointer-events-auto"
+                  priority={i === 0}
+                  loading={i === 0 ? "eager" : "lazy"}
+                />
+              </div>
+            </div>
+          </div>
+        );
+      })}
 
       {/* Nav arrows */}
       {banners.length > 1 && (
