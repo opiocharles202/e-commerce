@@ -57,13 +57,13 @@ export function StickyBuyBar({ product, onAddToCart, disabled }: StickyBuyBarPro
         </div>
 
         {/* Pricing & CTA */}
-        <div className="flex items-center gap-4 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
+        <div className="flex-1 sm:flex-initial flex items-center justify-between sm:justify-end gap-3 sm:gap-4">
           <div className="flex flex-col sm:items-end text-left sm:text-right">
-            <span className="text-lg font-extrabold text-gray-950 dark:text-gray-55">
+            <span className="text-base sm:text-lg font-extrabold text-gray-950 dark:text-gray-100 whitespace-nowrap">
               ${product.price.toFixed(2)}
             </span>
             {product.compareAtPrice && (
-              <span className="text-xs text-gray-400 dark:text-gray-500 line-through">
+              <span className="text-[10px] sm:text-xs text-gray-400 dark:text-gray-500 line-through whitespace-nowrap">
                 ${product.compareAtPrice.toFixed(2)}
               </span>
             )}
@@ -72,9 +72,9 @@ export function StickyBuyBar({ product, onAddToCart, disabled }: StickyBuyBarPro
           <button
             onClick={onAddToCart}
             disabled={disabled}
-            className="flex items-center justify-center gap-2 px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl shadow-md shadow-amber-500/10 transition-colors disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-gray-400 disabled:shadow-none disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-amber-500/10 transition-colors disabled:bg-gray-200 dark:disabled:bg-gray-800 disabled:text-gray-400 disabled:shadow-none disabled:cursor-not-allowed whitespace-nowrap"
           >
-            <ShoppingCart className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4 shrink-0" />
             <span>Add to Cart</span>
           </button>
         </div>
